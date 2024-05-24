@@ -19,8 +19,10 @@ build:
   # X11 packages, but as of 2023/02, it was difficult for us to compile
   # this particular aspect of X11 on windows
   skip: true  # [win]
-  number: 0
+  number: 1
   detect_binary_files_with_prefix: true
+  run_exports:
+    - {{ pin_subpackage(name|lower) }}
 
 requirements:
   build:
