@@ -7,7 +7,7 @@ Home: https://www.x.org/
 
 Package license: MIT
 
-Summary: Extension library for the XFree86-VidMode X extension
+Summary: Xlib-based library for the XFree86-VidMode X extension
 
 Development: https://cgit.freedesktop.org/xorg/lib/libXxf86vm
 
