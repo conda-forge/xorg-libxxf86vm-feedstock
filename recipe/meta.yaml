@@ -29,9 +29,9 @@ requirements:
     - pkg-config  # [not win]
     - posix  # [win]
     - gnuconfig  # [unix]
-    - {{ stdlib('c') }}          # [unix]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib('c') }}             # [unix]
+    - {{ compiler('c') }}           # [unix]
+    - {{ compiler('m2w64_c') }}     # [win]
   host:
     - xorg-util-macros
     - xorg-xproto
@@ -42,10 +42,6 @@ requirements:
     - xorg-libxext
     - xorg-xf86vidmodeproto
     - xorg-xf86vidmodeproto >=2.2.99.1
-  run:
-    - {{ pin_compatible('xorg-libx11') }}
-    - {{ pin_compatible('xorg-xextproto') }}
-    - {{ pin_compatible('xorg-libxext') }}
 
 test:
   commands:
@@ -62,7 +58,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: COPYING
-  summary: 'Extension library for the XFree86-VidMode X extension'
+  summary: Xlib-based library for the XFree86-VidMode X extension
   dev_url: https://cgit.freedesktop.org/xorg/lib/libXxf86vm
 
 extra:
