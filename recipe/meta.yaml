@@ -32,10 +32,6 @@ requirements:
     - {{ stdlib('c') }}          # [unix]
     - {{ compiler('c') }}        # [unix]
     - {{ compiler('m2w64_c') }}  # [win]
-    - autoconf                      # [unix]
-    - automake                      # [unix]
-    - gettext                       # [unix]
-    - libtool                       # [unix]
   host:
     - xorg-util-macros
     - xorg-xproto
