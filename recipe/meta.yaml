@@ -51,6 +51,10 @@ requirements:
     - xorg-libxext
     - xorg-xf86vidmodeproto
     - xorg-xf86vidmodeproto >=2.2.99.1
+  run:
+    - {{ pin_compatible('xorg-libx11') }}
+    - {{ pin_compatible('xorg-xextproto') }}
+    - {{ pin_compatible('xorg-libxext') }}
 
 test:
   commands:
