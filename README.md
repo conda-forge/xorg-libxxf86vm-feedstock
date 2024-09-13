@@ -7,7 +7,7 @@ Home: https://www.x.org/
 
 Package license: MIT
 
-Summary: Extension library for the XFree86-VidMode X extension
+Summary: Xlib-based library for the XFree86-VidMode X extension
 
 Development: https://cgit.freedesktop.org/xorg/lib/libXxf86vm
 
@@ -192,6 +192,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@ehfd](https://github.com/ehfd/)
 * [@hmaarrfk](https://github.com/hmaarrfk/)
 * [@pkgw](https://github.com/pkgw/)
 

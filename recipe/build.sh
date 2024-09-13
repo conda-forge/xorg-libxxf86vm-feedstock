@@ -1,9 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
 set -e
-set -x
 IFS=$' \t\n' # workaround for conda 4.2.13+toolchain bug
 
 # Adopt a Unix-friendly path if we're on Windows (see bld.bat).
@@ -36,6 +35,7 @@ if [ -n "$CYGWIN_PREFIX" ] ; then
     export AUTOMAKE=automake-$am_version
     autoreconf_args=(
         --force
+        --verbose
         --install
         -I "$mprefix/share/aclocal"
         -I "$BUILD_PREFIX_M/Library/mingw-w64/share/aclocal"
@@ -47,23 +47,19 @@ if [ -n "$CYGWIN_PREFIX" ] ; then
     platlibs=$(cd $(dirname $(gcc --print-prog-name=ld))/../lib && pwd -W)
     export LDFLAGS="$LDFLAGS -L$platlibs"
 else
-    # for other platforms we just need to reconf to get the correct achitecture
-    echo libtoolize
-    libtoolize
-    echo aclocal -I $PREFIX/share/aclocal -I $BUILD_PREFIX/share/aclocal
-    aclocal -I $PREFIX/share/aclocal -I $BUILD_PREFIX/share/aclocal
-    echo autoconf
-    autoconf
-    echo automake --force-missing --add-missing --include-deps
-    automake --force-missing --add-missing --include-deps
-
-    export CONFIG_FLAGS="--build=${BUILD}"
+    autoreconf_args=(
+        --force
+        --verbose
+        --install
+        -I "${PREFIX}/share/aclocal"
+        -I "${BUILD_PREFIX}/share/aclocal"
+    )
+    autoreconf "${autoreconf_args[@]}"
 fi
 
-
 export PKG_CONFIG_LIBDIR=$uprefix/lib/pkgconfig:$uprefix/share/pkgconfig
+export CONFIG_FLAGS="--build=${BUILD}"
 configure_args=(
-    $CONFIG_FLAGS
     --prefix=$mprefix
     --disable-static
     --disable-dependency-tracking
@@ -79,11 +75,7 @@ fi
 ./configure "${configure_args[@]}"
 make -j$CPU_COUNT
 make install
-if [[ "${CONDA_BUILD_CROSS_COMPILATION}" != "1" ]]; then
-make check
-fi
-
-rm -rf $uprefix/share/man $uprefix/share/doc/libXext
+rm -rf $uprefix/share/man $uprefix/share/doc/${PKG_NAME#xorg-}
 
 # Remove any new Libtool files we may have installed. It is intended that
 # conda-build will eventually do this automatically.
