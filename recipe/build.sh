@@ -40,6 +40,15 @@ if [ -n "$CYGWIN_PREFIX" ] ; then
     platlibs=$(cd $(dirname $($CC --print-prog-name=ld))/../sysroot/usr/lib && pwd -W)
     test -f $platlibs/libws2_32.a || { exit "error locating libws2_32" ; exit 1 ; }
     export LDFLAGS="$LDFLAGS -L$platlibs"
+else
+    autoreconf_args=(
+        --force
+        --verbose
+        --install
+        -I "${PREFIX}/share/aclocal"
+        -I "${BUILD_PREFIX}/share/aclocal"
+    )
+    autoreconf "${autoreconf_args[@]}"
 fi
 
 export PKG_CONFIG_LIBDIR=$uprefix/lib/pkgconfig:$uprefix/share/pkgconfig
