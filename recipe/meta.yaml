@@ -20,7 +20,6 @@ build:
   # this particular aspect of X11 on windows
   skip: true  # [win]
   number: 3
-  detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage(name|lower) }}
 
