@@ -3,7 +3,7 @@
 {% set name = "xorg-" ~ xorg_name %}
 {% set version = "1.1.5" %}
 {% set sha256 = "247fef48b3e0e7e67129e41f1e789e8d006ba47dba1c0cdce684b9b703f888e7" %}
-{% set am_version = "1.15" %} # keep synchronized with build.sh
+{% set am_version = "1.16" %} # keep synchronized with build.sh
 
 package:
   name: {{ name|lower }}
@@ -19,43 +19,35 @@ build:
   # X11 packages, but as of 2023/02, it was difficult for us to compile
   # this particular aspect of X11 on windows
   skip: true  # [win]
-  number: 2
+  number: 3
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage(name|lower) }}
 
 requirements:
   build:
-    - m2-autoconf  # [win]
+    - m2-autoconf                  # [win]
     - m2-automake{{ am_version }}  # [win]
-    - m2-libtool  # [win]
-    - m2w64-pkg-config  # [win]
-    - pkg-config  # [not win]
-    - posix  # [win]
-    - gnuconfig  # [unix]
-    - make
-    - {{ stdlib('c') }}             # [unix]
-    - {{ compiler('c') }}           # [unix]
-    - {{ stdlib('m2w64_c') }}       # [win]
-    - {{ compiler('m2w64_c') }}     # [win]
-    - autoconf                      # [unix]
-    - automake                      # [unix]
-    - gettext                       # [unix]
-    - libtool                       # [unix]
+    - m2-libtool                   # [win]
+    - pkg-config                   # [unix]
+    - m2-pkg-config                # [win]
+    - gnuconfig                    # [unix]
+    - m2-base                      # [win]
+    - make                         # [unix]
+    - m2-make                      # [win]
+    - {{ compiler('c') }}          # [unix]
+    - {{ stdlib('c') }}            # [unix]
+    - {{ compiler('m2w64_c') }}    # [win]
+    - {{ stdlib('m2w64_c') }}      # [win]
+    - autoconf                     # [unix]
+    - automake                     # [unix]
+    - gettext                      # [unix]
+    - libtool                      # [unix]
   host:
     - xorg-util-macros
-    - xorg-xproto
-    # Additional constraintless xorg-libx11 dep below is for conda-build to add potential pinning to.
+    - xorg-xorgproto
     - xorg-libx11
-    - xorg-libx11 >=1.6,<2
-    - xorg-xextproto
     - xorg-libxext
-    - xorg-xf86vidmodeproto
-    - xorg-xf86vidmodeproto >=2.2.99.1
-  run:
-    - {{ pin_compatible('xorg-libx11') }}
-    - {{ pin_compatible('xorg-xextproto') }}
-    - {{ pin_compatible('xorg-libxext') }}
 
 test:
   commands:
