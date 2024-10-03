@@ -35,10 +35,14 @@ requirements:
     - m2-base                      # [win]
     - make                         # [unix]
     - m2-make                      # [win]
-    - {{ stdlib('c') }}            # [unix]
     - {{ compiler('c') }}          # [unix]
-    - {{ stdlib('m2w64_c') }}      # [win]
+    - {{ stdlib('c') }}            # [unix]
     - {{ compiler('m2w64_c') }}    # [win]
+    - {{ stdlib('m2w64_c') }}      # [win]
+    - autoconf                     # [unix]
+    - automake                     # [unix]
+    - gettext                      # [unix]
+    - libtool                      # [unix]
   host:
     - xorg-util-macros
     - xorg-xorgproto
