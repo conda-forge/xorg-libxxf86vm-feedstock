@@ -1,8 +1,8 @@
 {% set xorg_name = "libXxf86vm" %}
 {% set xorg_category = "lib" %}
 {% set name = "xorg-" ~ xorg_name %}
-{% set version = "1.1.5" %}
-{% set sha256 = "247fef48b3e0e7e67129e41f1e789e8d006ba47dba1c0cdce684b9b703f888e7" %}
+{% set version = "1.1.6" %}
+{% set sha256 = "96af414c73ce1d5449ad04be7f9f27fa8330f844b6dda843ef22e3e1befb3ee3" %}
 {% set am_version = "1.16" %} # keep synchronized with build.sh
 
 package:
@@ -16,7 +16,7 @@ source:
     - windows.patch  # [win]
 
 build:
-  number: 4
+  number: 0
   run_exports:
     - {{ pin_subpackage(name|lower) }}
 
