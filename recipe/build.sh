@@ -45,6 +45,15 @@ if [ -n "$CYGWIN_PREFIX" ] ; then
     platlibs=$(cd $(dirname $($CC --print-prog-name=ld))/../sysroot/usr/lib && pwd -W)
     test -f $platlibs/libws2_32.a || { echo "error locating libws2_32" ; exit 1 ; }
     export LDFLAGS="$LDFLAGS -L$platlibs"
+
+    # m2-libtool >=2.6 dropped MSYS2's `msys*` host_os patches; MSYS2 now
+    # uses the `x86_64-pc-cygwin` triplet (whose libtool branch still emits
+    # msys-*.dll names). config.guess here still reports x86_64-pc-msys, which
+    # makes libtool silently disable shared libraries, so set it explicitly.
+    configure_args+=(
+        --build=x86_64-pc-cygwin
+        --host=x86_64-pc-cygwin
+    )
 else
     # Get an updated config.sub and config.guess
     cp $BUILD_PREFIX/share/gnuconfig/config.* .
